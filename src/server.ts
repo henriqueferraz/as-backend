@@ -5,6 +5,7 @@ import https from 'https';
 import http from 'http';
 
 import siteRoutes from './router/site';
+import adminRoutes from './router/admin';
 import { requestIntersepter } from './utils/requestIntercepter';
 
 
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.all('*', requestIntersepter);
 
-//app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 app.use('/', siteRoutes);
 
 const runServer = (port: number, server: http.Server) => {
