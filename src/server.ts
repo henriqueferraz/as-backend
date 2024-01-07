@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.all('*', requestIntersepter);
+app.all('*', requestIntersepter); //testado interseptador
 
 app.use('/admin', adminRoutes);
 app.use('/', siteRoutes);
