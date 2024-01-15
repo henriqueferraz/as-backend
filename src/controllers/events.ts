@@ -35,3 +35,22 @@ export const addEvent: RequestHandler = async (req, res) => {
 
     res.json({ error: 'Erro de evento' })
 }
+
+
+export const updateEvent: RequestHandler = async (req, res) => {
+    const { id } = req.params
+    const updateEventSchema = z.object({
+        status: z.boolean().optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        grouped: z.boolean().optional()
+    })
+    const body = updateEventSchema.safeParse(req.body)
+    if (!body.success) return res.json({ error: 'Dados inválidos' })
+
+    const updatedEvent = await events.update(parseInt(id), body.data)
+    if (updatedEvent) {
+        return res.json({ event: updatedEvent })
+    }
+    res.json({ error: 'Erro de evento' })
+}
