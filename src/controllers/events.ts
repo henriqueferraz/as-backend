@@ -1,6 +1,8 @@
 import { RequestHandler } from "express";
-import { z } from "zod";
 import * as events from '../services/events';
+import * as people from '../services/peoples';
+import { z } from "zod";
+
 
 export const getAll: RequestHandler = async (req, res) => {
     const itens = await events.getAllServices();
@@ -50,6 +52,11 @@ export const updateEvent: RequestHandler = async (req, res) => {
 
     const updatedEvent = await events.update(parseInt(id), body.data)
     if (updatedEvent) {
+        if (updatedEvent.status) {
+
+        } else {
+
+        }
         return res.json({ event: updatedEvent })
     }
     res.json({ error: 'Erro de evento' })

@@ -1,12 +1,13 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import https from 'https';
-import http from 'http';
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
+import https from 'https'
+import http from 'http'
+import fs from 'fs'
 
-import siteRoutes from './router/site';
-import adminRoutes from './router/admin';
-import { requestIntersepter } from './utils/requestIntercepter';
+import siteRoutes from './router/site'
+import adminRoutes from './router/admin'
+import { requestIntersepter } from './utils/requestIntercepter'
 
 
 const app = express();
@@ -28,8 +29,15 @@ const runServer = (port: number, server: http.Server) => {
 
 const regularServer = http.createServer(app);
 if (process.env.NODE_ENV === 'production') {
-    // TODO: CONFIGURAR SSL
-    // TODO: RODAR SERVER NA PORTA 80 E PORTA 443
+    const options = {
+        key: fs.readFileSync(process.env.SSL_KEY as string),
+        cert: fs.readFileSync(process.env.SSL_CERT as string)
+    }
+
+    const sslServer = https.createServer(options, app)
+    runServer(80, regularServer)
+    runServer(443, sslServer)
+
 } else {
     const serverPort: number = process.env.PORT ? parseInt(process.env.PORT) : 9000;
     runServer(serverPort, regularServer);
