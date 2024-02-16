@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
 import * as peoples from '../services/peoples'
 import { z } from "zod";
-import { error } from "console";
 
 
 export const getAllPeoples: RequestHandler = async (req, res) => {
@@ -59,10 +58,19 @@ export const searchPerson: RequestHandler = async (req, res) => {
     const { id_event } = req.params
 
     const searchPersonSchema = z.object({
-        cpf: z.string()
+        cpf: z.string().transform(val => val.replace(/\.|-/gm, ''))
     })
 
     const query = searchPersonSchema.safeParse(req.query)
     if (!query.success) return res.json({ error: 'Dados Inválidos' })
+
+    const personItem = await peoples.getOne({
+        id_event: parseInt(id_event),
+        cpf: query.data.cpf
+    })
+    if (personItem && personItem.matched) {
+        //const matchId = decryptMatch(personItem.matched)
+    }
+    res.json({ error: 'Ocorreu um erro aqui' })
 
 }

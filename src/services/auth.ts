@@ -1,6 +1,6 @@
 import { getToday } from "../utils/getToday"
 
-export const validatePassword = (password: String): boolean => {
+export const validatePassword = (password: string): boolean => {
     const currentPassword = getToday().split('/').join('');
     return password === currentPassword;
 };

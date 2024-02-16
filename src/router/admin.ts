@@ -13,11 +13,12 @@ router.post('/login', auth.login);
 // Rotas Validadas
 router.get('/ping', auth.validate, (req, res) => res.json({ pong: true, admin: true })); //testado
 
-router.get('/event', auth.validate, events.getAll);
-router.get('/event/:id', auth.validate, events.getEvent);
-router.post('/event', auth.validate, events.addEvent)
-router.put('/event/:id', auth.validate, events.updateEvent)
-router.delete('/event/:id', auth.validate, events.deleteEvent)
+//rotas de eventos testado e funcionando - 16/02
+router.get('/event', auth.validate, events.getAll); //testado
+router.get('/event/:id', auth.validate, events.getEvent);//testado
+router.post('/event', auth.validate, events.addEvent)//testado
+router.put('/event/:id', auth.validate, events.updateEvent)//testado
+router.delete('/event/:id', auth.validate, events.deleteEvent)//TESTADO
 
 router.get('/event/:id_event/groups', auth.validate, groups.getAllGroups)
 router.get('/event/:id_event/groups/:id', auth.validate, groups.getGroup)
