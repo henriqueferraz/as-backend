@@ -14,21 +14,22 @@ router.post('/login', auth.login);
 router.get('/ping', auth.validate, (req, res) => res.json({ pong: true, admin: true })); //testado
 
 //rotas de eventos testado e funcionando - 16/02
-router.get('/event', auth.validate, events.getAll); //testado
-router.get('/event/:id', auth.validate, events.getEvent);//testado
-router.post('/event', auth.validate, events.addEvent)//testado
-router.put('/event/:id', auth.validate, events.updateEvent)//testado
+router.get('/event', auth.validate, events.getAll); //TESTADO
+router.get('/event/:id', auth.validate, events.getEvent);//TESTADO
+router.post('/event', auth.validate, events.addEvent)//TESTADO
+router.put('/event/:id', auth.validate, events.updateEvent)//TESTADO
 router.delete('/event/:id', auth.validate, events.deleteEvent)//TESTADO
 
-router.get('/event/:id_event/groups', auth.validate, groups.getAllGroups)
-router.get('/event/:id_event/groups/:id', auth.validate, groups.getGroup)
-router.post('/event/:id_event/groups/', auth.validate, groups.addGroup)
-router.put('/event/:id_event/groups/:id', auth.validate, groups.updateGroup)
-router.delete('/event/:id_event/groups/:id', auth.validate, groups.deleteGroup)
+//rotas de grupos testado e funcionando - 16/02
+router.get('/event/:id_event/groups', auth.validate, groups.getAllGroups)//TESTADO
+router.get('/event/:id_event/groups/:id', auth.validate, groups.getGroup)//TESTADO
+router.post('/event/:id_event/groups/', auth.validate, groups.addGroup)//TESTADO
+router.put('/event/:id_event/groups/:id', auth.validate, groups.updateGroup)//TESTADO
+router.delete('/event/:id_event/groups/:id', auth.validate, groups.deleteGroup)//TESTADO
 
-router.get('/event/:id_event/groups/:id_groups/people', auth.validate, people.getAllPeoples)
-router.get('/event/:id_event/groups/:id_groups/people/:id', auth.validate, people.getPerson)
-router.post('/event/:id_event/groups/:id_groups/people', auth.validate, people.addPerson)
+router.get('/event/:id_event/groups/:id_group/people', auth.validate, people.getAll)//TESTADO
+router.get('/event/:id_event/groups/:id_group/people/:id', auth.validate, people.getPerson)//TESTADO
+//router.post('/event/:id_event/groups/:id_group/people', auth.validate, people.addPerson)
 
 
 export default router;

@@ -3,6 +3,7 @@ import * as events from './events'
 
 const prisma = new PrismaClient()
 
+//TESTADO
 export const getAllServices = async (id_event: number) => {
     try {
         return await prisma.eventGroup.findMany({ where: { id_event } })
@@ -11,6 +12,7 @@ export const getAllServices = async (id_event: number) => {
     }
 }
 
+//TESTADO
 type GetOneFilters = { id: number, id_event?: number }
 
 export const getOne = async (filters: GetOneFilters) => {
@@ -21,13 +23,14 @@ export const getOne = async (filters: GetOneFilters) => {
     }
 }
 
+//TESTADO
 type GroupsCreateData = Prisma.Args<typeof prisma.eventGroup, 'create'>['data']
 
 export const add = async (data: GroupsCreateData) => {
     try {
         if (!data.id_event) return false
-
         const eventItem = await events.getOneService(data.id_event)
+
         if (!eventItem) return false
         return await prisma.eventGroup.create({ data })
 
@@ -36,7 +39,7 @@ export const add = async (data: GroupsCreateData) => {
     }
 }
 
-
+//TESTADO
 type UpdateFilters = { id: number, id_event?: number }
 type GroupsUpdateData = Prisma.Args<typeof prisma.eventGroup, 'update'>['data']
 
@@ -48,6 +51,7 @@ export const update = async (filters: UpdateFilters, data: GroupsUpdateData) => 
     }
 }
 
+//TESTADO
 type DeleteFilters = { id: number, id_event?: number }
 export const remove = async (filters: DeleteFilters) => {
     try {

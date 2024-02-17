@@ -3,7 +3,7 @@ import * as groups from '../services/groups'
 import { z } from "zod";
 
 
-
+//TESTADO
 export const getAllGroups: RequestHandler = async (req, res) => {
     const { id_event } = req.params
 
@@ -11,9 +11,9 @@ export const getAllGroups: RequestHandler = async (req, res) => {
 
     if (itens) return res.json({ groups: itens })
 
-    res.json({ error: 'Ocorreu um erro' })
+    res.json({ error: 'Ocorreu um erro - GROUPS001' })
 }
-
+//TESTADO
 export const getGroup: RequestHandler = async (req, res) => {
     const { id, id_event } = req.params
 
@@ -24,9 +24,10 @@ export const getGroup: RequestHandler = async (req, res) => {
 
     if (groupItem) return res.json({ group: groupItem })
 
-    res.json({ error: 'Ocorreu um erro' })
+    res.json({ error: 'Ocorreu um erro - GROUPS002' })
 }
 
+//TESTADO
 export const addGroup: RequestHandler = async (req, res) => {
     const { id_event } = req.params
 
@@ -35,19 +36,19 @@ export const addGroup: RequestHandler = async (req, res) => {
     })
 
     const body = addGroupSchema.safeParse(req.body)
-    if (!body.success) return res.json({ error: 'Dados Inválidos' })
+    if (!body.success) return res.json({ error: 'Dados Inválidos - GROUPS003' })
 
     const newGroup = await groups.add({
         name: body.data.name,
         id_event: parseInt(id_event)
     })
 
-    if (newGroup) return res.json({ group: newGroup })
+    if (newGroup) return res.status(201).json({ group: newGroup })
 
-    res.json({ error: 'Ocorreu um erro' })
+    res.json({ error: 'Ocorreu um erro - GROUPS004' })
 }
 
-
+//TESTADO
 export const updateGroup: RequestHandler = async (req, res) => {
     const { id, id_event } = req.params
 
@@ -56,7 +57,7 @@ export const updateGroup: RequestHandler = async (req, res) => {
     })
 
     const body = updateGroupSchema.safeParse(req.body)
-    if (!body.success) return res.json({ error: 'Dados Inválidos' })
+    if (!body.success) return res.json({ error: 'Dados Inválidos - GROUPS005' })
 
     const updatedGroup = await groups.update({
         id: parseInt(id),
@@ -65,10 +66,10 @@ export const updateGroup: RequestHandler = async (req, res) => {
 
     if (updatedGroup) return res.json({ group: updatedGroup })
 
-    res.json({ error: 'Ocorreu um erro' })
+    res.json({ error: 'Ocorreu um erro - GROUPS006' })
 }
 
-
+//TESTADO
 export const deleteGroup: RequestHandler = async (req, res) => {
     const { id, id_event } = req.params
 
@@ -79,5 +80,5 @@ export const deleteGroup: RequestHandler = async (req, res) => {
 
     if (deletedGroup) return res.json({ group: deletedGroup })
 
-    res.json({ error: 'Ocorreu um erro' })
+    res.json({ error: 'Ocorreu um erro - GROUPS007' })
 }
