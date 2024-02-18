@@ -3,6 +3,7 @@ import * as events from '../services/events';
 import * as people from '../services/peoples';
 
 import { z } from "zod";
+import { decryptMatch } from "../utils/match";
 
 //TESTADO
 export const getAll: RequestHandler = async (req, res) => {
@@ -77,4 +78,41 @@ export const deleteEvent: RequestHandler = async (req, res) => {
     }
     res.json({ error: 'Erro de evento - EVENT007' })
 
+}
+
+
+export const searchPerson: RequestHandler = async (req, res) => {
+    const { id_event } = req.params
+
+    const searchPersonSchema = z.object({
+        cpf: z.string().transform(val => val.replace(/\.|-|,/gm, ''))
+    })
+    const query = searchPersonSchema.safeParse(req.query)
+    if (!query.success) return res.json({ error: 'Dados inválidos - EVENT008' })
+
+    const personItem = await people.getOne({
+        id_event: parseInt(id_event),
+        cpf: query.data.cpf
+    })
+    if (personItem && personItem.matched) {
+        const matchId = decryptMatch(personItem.matched)
+        const personMatched = await people.getOne({
+            id_event: parseInt(id_event),
+            id: matchId
+        })
+        if (personMatched) {
+            return res.json({
+                person: {
+                    id: personItem.id,
+                    name: personItem.name
+                },
+                personMatched: {
+                    id: personMatched.id,
+                    name: personMatched.name
+                }
+            })
+        }
+    }
+
+    res.json({ error: 'Ocorreu um erro no evento - Event009' });
 }

@@ -34,9 +34,9 @@ if (process.env.NODE_ENV === 'production') {
         cert: fs.readFileSync(process.env.SSL_CERT as string)
     }
 
-    const sslServer = https.createServer(options, app)
+    const secServer = https.createServer(options, app)
     runServer(80, regularServer)
-    runServer(443, sslServer)
+    runServer(443, secServer)
 
 } else {
     const serverPort: number = process.env.PORT ? parseInt(process.env.PORT) : 9000;
